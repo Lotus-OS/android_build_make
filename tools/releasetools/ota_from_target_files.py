@@ -842,7 +842,7 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
   script.Print("/______/\____/\__/\__,_//____/    \____/      ")
   script.Print("                                              ")
   script.Print("       -------Feel the beauty-------          ")
-  script.Print("            /By:@hungphan2001/                ")
+  script.Print("             /By:Nobi Nobita/                 ")
   script.Print("----------------------------------------------")
   script.Print(" Android version: %s"%(android_version));
   script.Print(" Build id: %s"%(build_id));
