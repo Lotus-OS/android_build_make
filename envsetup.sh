@@ -33,7 +33,7 @@ Invoke ". build/envsetup.sh" from your shell to add the following functions to y
 
 EOF
 
-    __print_custom_functions_help
+    __print_lotus_functions_help
 
 cat <<EOF
 
@@ -143,12 +143,12 @@ function check_product()
         return
     fi
     if (echo -n $1 | grep -q -e "^aosp_") ; then
-        CUSTOM_BUILD=$(echo -n $1 | sed -e 's/^aosp_//g')
-        export BUILD_NUMBER=$( (date +%s%N ; echo $CUSTOM_BUILD; hostname) | openssl sha1 | sed -e 's/.*=//g; s/ //g' | cut -c1-10 )
+        LOTUS_BUILD=$(echo -n $1 | sed -e 's/^aosp_//g')
+        export BUILD_NUMBER=$( (date +%s%N ; echo $LOTUS_BUILD; hostname) | openssl sha1 | sed -e 's/.*=//g; s/ //g' | cut -c1-10 )
     else
-        CUSTOM_BUILD=
+        LOTUS_BUILD=
     fi
-    export CUSTOM_BUILD
+    export LOTUS_BUILD
 
         TARGET_PRODUCT=$1 \
         TARGET_BUILD_VARIANT= \
@@ -687,13 +687,13 @@ function lunch()
         # if we can't find a product, try to grab it
         T=$(gettop)
         cd $T > /dev/null
-        vendor/aosp/build/tools/roomservice.py $product
+        vendor/lotus/build/tools/roomservice.py $product
         cd - > /dev/null
         check_product $product
     else
         T=$(gettop)
         cd $T > /dev/null
-        vendor/aosp/build/tools/roomservice.py $product true
+        vendor/lotus/build/tools/roomservice.py $product true
         cd - > /dev/null
     fi
 
@@ -1677,4 +1677,4 @@ fi
 
 export ANDROID_BUILD_TOP=$(gettop)
 
-. $ANDROID_BUILD_TOP/vendor/aosp/build/envsetup.sh
+. $ANDROID_BUILD_TOP/vendor/lotus/build/envsetup.sh
