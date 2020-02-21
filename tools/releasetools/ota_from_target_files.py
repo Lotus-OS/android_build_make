@@ -1293,7 +1293,7 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
   build_id = target_info.GetBuildProp("ro.build.id")
   build_date = target_info.GetBuildProp("ro.lotus.build_date")
   security_patch = target_info.GetBuildProp("ro.build.version.security_patch")
-  device = target_info.GetBuildProp("ro.device")
+  device = target_info.GetBuildProp("ro.lotus.device")
 
   script.Print("----------------------------------------------")
   script.Print("    __           __        _____         ____ ")
@@ -1307,13 +1307,7 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
   script.Print("              /By:@polanobi/                  ")
   script.Print("              /By:@San2k/                     ")
   script.Print("----------------------------------------------")
-  script.Print(" Android version: %s"%(android_version));
-  script.Print(" Build id: %s"%(build_id));
-  script.Print(" Build date: %s"%(build_date));
-  script.Print(" Security patch: %s"%(security_patch));
-  script.Print(" Device: %s"%(device));
-  script.Print("----------------------------------------------");
-  script.Print("----------------------------------------------");
+
   device_specific.FullOTA_InstallBegin()
 
   CopyInstallTools(output_zip)
@@ -2098,6 +2092,18 @@ else if get_stage("%(bcb_dev)s") != "3/3" then
   script.Print("              /By:@polanobi/                  ")
   script.Print("              /By:@San2k/                     ")
   script.Print("----------------------------------------------")
+  script.Print(" Android version: %s"%(android_version));
+  if prev_build_id != build_id:
+    script.Print(" Build id: %s -> %s"%(prev_build_id, build_id));
+  else:
+    script.Print(" Build id: %s"%(build_id));
+  script.Print(" Build date: %s -> %s"%(prev_build_date, build_date));
+  if prev_security_patch != security_patch:
+    script.Print(" Security patch: %s -> %s"%(prev_security_patch, security_patch));
+  else:
+    script.Print(" Security patch: %s"%(security_patch));
+  script.Print(" Device: %s"%(device));
+  script.Print("----------------------------------------------");
 
   CopyInstallTools(output_zip)
   script.UnpackPackageDir("install", "/tmp/install")
@@ -2632,6 +2638,18 @@ def WriteIncrementalOTAPackage(target_zip, source_zip, output_file):
   script.Print("              /By:@polanobi/                  ")
   script.Print("              /By:@San2k/                     ")
   script.Print("----------------------------------------------")
+  script.Print(" Android version: %s"%(android_version));
+  if prev_build_id != build_id:
+    script.Print(" Build id: %s -> %s"%(prev_build_id, build_id));
+  else:
+    script.Print(" Build id: %s"%(build_id));
+  script.Print(" Build date: %s -> %s"%(prev_build_date, build_date));
+  if prev_security_patch != security_patch:
+    script.Print(" Security patch: %s -> %s"%(prev_security_patch, security_patch));
+  else:
+    script.Print(" Security patch: %s"%(security_patch));
+  script.Print(" Device: %s"%(device));
+  script.Print("----------------------------------------------");
 
   CopyInstallTools(output_zip)
   script.UnpackPackageDir("install", "/tmp/install")
@@ -3105,3 +3123,4 @@ if __name__ == '__main__':
     sys.exit(1)
   finally:
     common.Cleanup()
+
